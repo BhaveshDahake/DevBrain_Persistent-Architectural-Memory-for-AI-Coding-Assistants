@@ -1,0 +1,135 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database - Production
+  postgres:
+    image: postgres:16-alpine
+    container_name: devbrain_postgres
+    environment:
+      POSTGRES_DB: devbrain
+      POSTGRES_USER: ${DATASOURCE_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DATASOURCE_PASSWORD:?error}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATASOURCE_USERNAME:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - devbrain-network
+
+  # Cognee Server - Local or Cloud
+  cognee:
+    image: cognee/cognee:latest
+    container_name: devbrain_cognee
+    environment:
+      - LLM_PROVIDER=custom
+      - LLM_API_KEY=${GROQ_API_KEY:?error}
+      - LLM_MODEL=${GROQ_MODEL:-groq/llama-3.1-8b-instant}
+      - EMBEDDING_PROVIDER=fastembed
+      - EMBEDDING_MODEL=BAAI/bge-small-en-v1.5
+      - EMBEDDING_DIMENSIONS=384
+      - ENABLE_BACKEND_ACCESS_CONTROL=false
+      - REQUIRE_AUTHENTICATION=false
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - devbrain-network
+    depends_on:
+      - postgres
+
+  # DevBrain Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devbrain_backend
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/devbrain
+      DATASOURCE_USERNAME: ${DATASOURCE_USERNAME:-postgres}
+      DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD:?error}
+      COGNEE_BASE_URL: ${COGNEE_BASE_URL:-http://cognee:8000}
+      COGNEE_API_KEY: ${COGNEE_API_KEY:?error}
+      GROQ_API_KEY: ${GROQ_API_KEY:?error}
+      GROQ_API_BASE: ${GROQ_API_BASE:-https://api.groq.com/openai/v1}
+      GROQ_MODEL: ${GROQ_MODEL:-llama-3.1-8b-instant}
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY:-}
+      SUPABASE_AUTH_ENABLED: ${SUPABASE_AUTH_ENABLED:-false}
+      COGNEE_REQUEST_TIMEOUT: ${COGNEE_REQUEST_TIMEOUT:-60s}
+      COGNEE_FALLBACK_FAILURE_THRESHOLD: ${COGNEE_FALLBACK_FAILURE_THRESHOLD:-3}
+      COGNEE_FALLBACK_COOLDOWN: ${COGNEE_FALLBACK_COOLDOWN:-1m}
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - devbrain_workspace:/data/workspace
+      - devbrain_uploads:/tmp/devbrain-uploads
+      - devbrain_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health/readiness"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - devbrain-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      cognee:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # DevBrain Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: devbrain_frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://backend:8080}
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5173/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - devbrain-network
+    depends_on:
+      - backend
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  postgres_data:
+  devbrain_workspace:
+  devbrain_uploads:
+  devbrain_logs:
+
+networks:
+  devbrain-network:
+    driver: bridge

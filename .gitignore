@@ -36,8 +36,43 @@ out/
 ### VS Code ###
 .vscode/
 
-# Build and local environment files
-target/
+# Environment and secrets
 .env
+.env.*
+!.env.example
+!.env.prod.example
+
+# Build outputs and dependencies
+target/
+build/
+.gradle/
+coverage/
+dist/
+frontend/dist/
+frontend/node_modules/
+node_modules/
+
+# Runtime and local data
 uploads/
 workspace/
+logs/
+*.log
+*.zip
+*.tmp
+*.temp
+tmp/
+tmp*/
+out.txt
+__pycache__/
+*.py[cod]
+*.class
+*.jar
+*.war
+*.ear
+
+# OS and editor extras
+.DS_Store
+Thumbs.db
+.vercel/
+.render/
+openapi.json

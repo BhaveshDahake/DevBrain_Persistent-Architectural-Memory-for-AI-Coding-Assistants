@@ -5,6 +5,7 @@ import com.example.DevBrain.dto.KnowledgeGraphResponse;
 import com.example.DevBrain.dto.SearchResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.mockito.Mockito;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.BodyInserter;
@@ -42,7 +43,7 @@ public class CogneeClientServiceTest {
         properties = Mockito.mock(CogneeProperties.class);
         availabilityService = Mockito.mock(CogneeAvailabilityService.class);
         localRepositorySearchService = Mockito.mock(LocalRepositorySearchService.class);
-        service = new CogneeClientService(webClient, properties, availabilityService, localRepositorySearchService);
+        service = new CogneeClientService(webClient, properties, availabilityService, localRepositorySearchService, new SimpleMeterRegistry());
     }
 
     @Test

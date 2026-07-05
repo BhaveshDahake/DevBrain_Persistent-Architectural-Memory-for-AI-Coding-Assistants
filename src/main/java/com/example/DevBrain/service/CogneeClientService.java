@@ -122,7 +122,8 @@ public class CogneeClientService {
     private final MeterRegistry meterRegistry;
 
     public CogneeClientService(@Qualifier("cogneeWebClient") WebClient webClient, CogneeProperties properties,
-                               CogneeAvailabilityService availabilityService, LocalRepositorySearchService localRepositorySearchService) {
+                               CogneeAvailabilityService availabilityService, LocalRepositorySearchService localRepositorySearchService,
+                               MeterRegistry meterRegistry) {
         this.webClient = webClient;
         this.properties = properties;
         this.availabilityService = availabilityService;
