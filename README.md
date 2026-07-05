@@ -1,18 +1,44 @@
 # DevBrain
 
-DevBrain is a full-stack application that turns a repository into a persistent, queryable knowledge layer for developers. Users can upload a codebase, extract its structure, and ask questions about the repository in natural language while the system grounds answers in the uploaded project context.
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-21%2B-007396?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+DevBrain is a full-stack application that turns a repository into a persistent, queryable knowledge layer for developers. It combines a polished landing experience, authenticated access, a repository upload workflow, a chat interface, and a visual architecture graph to make codebase understanding more grounded and repeatable.
 
 ## What this project does
 
-- Uploads a repository archive and prepares it for semantic analysis.
+- Delivers a landing page and authentication flow with Supabase-backed sign-in and sign-up.
+- Lets users upload repository archives and prepare them for semantic analysis.
 - Builds a knowledge graph over repository structure and relationships.
-- Exposes chat and graph-based interactions through a React frontend and a Spring Boot backend.
-- Supports local development and deployment-friendly configuration for GitHub, Vercel, and Render.
+- Supports conversational repository interaction through a React frontend and a Spring Boot backend.
+- Includes deployment-ready configuration for GitHub, Vercel, and Render.
+
+## Cognee lifecycle verbs
+
+DevBrain is built around the four Cognee lifecycle verbs that power the product experience:
+
+- Remember: ingest uploaded repositories, clean them, and build structured repository memory.
+- Recall: answer questions about a repository using grounded retrieval and contextual references.
+- Improve: reinforce useful responses so future retrieval becomes stronger over time.
+- Forget: reset context and remove repository memory when a new task or project context is needed.
+
+## Core experience
+
+- Landing page with product storytelling and clear calls to action.
+- Supabase authentication for sign-in, sign-up, and OAuth-based entry.
+- Repository upload and processing workflow.
+- Chat-based repository interaction with grounded responses.
+- Interactive graph visualization for architecture exploration.
 
 ## Tech stack
 
 - Frontend: React, Vite, Tailwind CSS
 - Backend: Java, Spring Boot, Spring WebFlux, Spring AI
+- Authentication: Supabase
 - Memory layer: Cognee integration
 - Deployment: Docker, Vercel, Render
 
@@ -37,6 +63,7 @@ Before running the app locally, make sure you have:
 - Node.js 18 or newer
 - Maven or the provided Maven wrapper
 - API credentials for the services you plan to use, such as Cognee and an LLM provider
+- Supabase credentials for authentication
 
 ## Environment variables
 
