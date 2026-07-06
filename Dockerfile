@@ -10,9 +10,9 @@ COPY src/ ./src
 COPY .mvn/ ./.mvn
 COPY mvnw ./
 
-# Build with production profile
+# Build without a missing Maven profile and clear any MAVEN_CONFIG wrapper injection
 RUN chmod +x mvnw && \
-    ./mvnw clean package -DskipTests -P prod
+    MAVEN_CONFIG= ./mvnw clean package -DskipTests
 
 # Stage 2: Runtime
 FROM eclipse-temurin:26-jre-jammy
