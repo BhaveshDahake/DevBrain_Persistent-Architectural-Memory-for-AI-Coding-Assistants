@@ -1,6 +1,6 @@
 # Multi-stage build for DevBrain Backend
 # Stage 1: Build
-FROM maven:3.9.9-eclipse-temurin-17 AS builder
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
 WORKDIR /build
 
@@ -15,7 +15,7 @@ RUN chmod +x mvnw && \
     MAVEN_CONFIG= ./mvnw clean package -DskipTests
 
 # Stage 2: Runtime
-FROM eclipse-temurin:26-jre-jammy
+FROM eclipse-temurin:21-jre
 
 # Install curl for health checks
 RUN apt-get update && apt-get install -y curl && apt-get clean && rm -rf /var/lib/apt/lists/*
