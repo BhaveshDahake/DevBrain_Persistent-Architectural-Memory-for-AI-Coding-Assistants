@@ -30,7 +30,7 @@ RUN mkdir -p /app/logs /data/workspace /tmp/devbrain-uploads && \
 COPY --from=builder /build/target/DevBrain-*.jar app.jar
 
 # Non-root user for security
-RUN useradd -m -u 1000 devbrain && \
+RUN useradd -m devbrain && \
     chown -R devbrain:devbrain /app /data /tmp/devbrain-uploads
 
 USER devbrain
