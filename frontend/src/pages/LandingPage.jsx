@@ -109,8 +109,8 @@ const LandingPage = () => {
       {/* TopNavBar */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 transition-all select-none">
         <div className="flex justify-between items-center w-full px-6 md:px-8 max-w-7xl mx-auto h-16">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-black text-slate-800 tracking-tight">DevBrain</span>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+            <img src="/logo_normal.svg?v=3" alt="DevBrain Logo" className="h-14 w-auto object-contain" />
           </div>
           <div className="hidden md:flex items-center gap-8">
             <a className="text-slate-500 hover:text-indigo-600 transition-colors text-sm font-semibold" href="#features">Features</a>
@@ -295,21 +295,83 @@ const LandingPage = () => {
       </section>
 
       {/* Tech Strip */}
-      <div className="w-full bg-white border-y border-slate-200 overflow-hidden py-3 select-none">
-        <div className="tech-logo-scroll gap-20 items-center px-6">
-          <div className="flex gap-20 items-center">
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">React</span>
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">Spring Boot</span>
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">Spring AI</span>
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">Cognee Cloud</span>
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">VectorDB</span>
+      <div className="w-full bg-white border-y border-slate-200 overflow-hidden py-4 select-none">
+        <div className="tech-logo-scroll flex gap-0 items-center">
+          <div className="flex gap-16 items-center flex-shrink-0 pr-16">
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="-11.5 -10.23 23 20.46" className="w-5 h-5 fill-none stroke-[#00d8ff] stroke-[1.5] animate-[spin_20s_linear_infinite]"><ellipse rx="11" ry="4.2"/><ellipse rx="11" ry="4.2" transform="rotate(60)"/><ellipse rx="11" ry="4.2" transform="rotate(120)"/><circle r="2" fill="#00d8ff"/></svg>
+              <span>React</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 256 256" className="w-5 h-5"><defs><linearGradient id="vite-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#bd34fe"/><stop offset="100%" stopColor="#41b883"/></linearGradient></defs><path fill="url(#vite-grad)" d="M128 0L24 180h80l24 76 24-76h80z"/></svg>
+              <span>Vite</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#38bdf8]"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.002 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z"/></svg>
+              <span>Tailwind CSS</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 stroke-[#6366f1] stroke-[2] fill-none"><circle cx="12" cy="12" r="3" fill="#6366f1"/><circle cx="5" cy="5" r="2.5" fill="#6366f1" stroke="#ffffff" strokeWidth="1"/><circle cx="19" cy="5" r="2.5" fill="#6366f1" stroke="#ffffff" strokeWidth="1"/><circle cx="19" cy="19" r="2.5" fill="#6366f1" stroke="#ffffff" strokeWidth="1"/><circle cx="5" cy="19" r="2.5" fill="#6366f1" stroke="#ffffff" strokeWidth="1"/><line x1="5" y1="5" x2="9.8" y2="9.8"/><line x1="19" y1="5" x2="14.2" y2="9.8"/><line x1="19" y1="19" x2="14.2" y2="14.2"/><line x1="5" y1="19" x2="9.8" y2="14.2"/></svg>
+              <span>React Force Graph</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5"><circle cx="12" cy="12" r="10" fill="#6db33f"/><path d="M12 6c-2.5 2.5-3.5 5.5-1.5 8s5.5 1.5 6.5-1c1-2.5-2.5-4.5-5-7zM9.5 14.5c-.5-.5-.5-1.2 0-1.7s1.2-.5 1.7 0" fill="#ffffff" opacity="0.95"/></svg>
+              <span>Spring Boot</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5"><circle cx="12" cy="12" r="10" fill="#10b981"/><path d="M12 6c-2 2-3 4-1.5 6s4.5 1 5.5-.8c.8-1.8-2-3.2-4-5.2z" fill="#ffffff"/><circle cx="12" cy="12" r="1" fill="#10b981"/><path d="M8 12h8M12 8v8" stroke="#ffffff" strokeWidth="1.5" strokeDasharray="1 1"/></svg>
+              <span>Spring AI</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5"><rect x="2" y="2" width="20" height="20" rx="4" fill="#8b5cf6"/><path d="M8 8a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm6 8a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" fill="#ffffff"/><path d="M12 9l2 5M10 11l4 2" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              <span>Cognee Cloud</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#3ecf8e]"><path d="M14 2L5 12.5h6.5v9.5l9-10.5h-6.5z"/></svg>
+              <span>Supabase</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5"><circle cx="12" cy="12" r="10" fill="#f55036"/><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5c1.66 0 3.13-.81 4.05-2.05l-1.42-1.42C14.05 14.18 13.1 14.5 12 14.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5c1.1 0 2.05.72 2.38 1.72h-2.38V12.5h3.9c-.1-2.5-2.1-4.5-4.9-4.5z" fill="#ffffff"/></svg>
+              <span>Groq</span>
+            </span>
           </div>
-          <div className="flex gap-20 items-center">
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">React</span>
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">Spring Boot</span>
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">Spring AI</span>
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">Cognee Cloud</span>
-            <span className="text-xs font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5">VectorDB</span>
+          <div className="flex gap-16 items-center flex-shrink-0 pr-16">
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="-11.5 -10.23 23 20.46" className="w-5 h-5 fill-none stroke-[#00d8ff] stroke-[1.5] animate-[spin_20s_linear_infinite]"><ellipse rx="11" ry="4.2"/><ellipse rx="11" ry="4.2" transform="rotate(60)"/><ellipse rx="11" ry="4.2" transform="rotate(120)"/><circle r="2" fill="#00d8ff"/></svg>
+              <span>React</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 256 256" className="w-5 h-5"><defs><linearGradient id="vite-grad-2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#bd34fe"/><stop offset="100%" stopColor="#41b883"/></linearGradient></defs><path fill="url(#vite-grad-2)" d="M128 0L24 180h80l24 76 24-76h80z"/></svg>
+              <span>Vite</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#38bdf8]"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.002 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z"/></svg>
+              <span>Tailwind CSS</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 stroke-[#6366f1] stroke-[2] fill-none"><circle cx="12" cy="12" r="3" fill="#6366f1"/><circle cx="5" cy="5" r="2.5" fill="#6366f1" stroke="#ffffff" strokeWidth="1"/><circle cx="19" cy="5" r="2.5" fill="#6366f1" stroke="#ffffff" strokeWidth="1"/><circle cx="19" cy="19" r="2.5" fill="#6366f1" stroke="#ffffff" strokeWidth="1"/><circle cx="5" cy="19" r="2.5" fill="#6366f1" stroke="#ffffff" strokeWidth="1"/><line x1="5" y1="5" x2="9.8" y2="9.8"/><line x1="19" y1="5" x2="14.2" y2="9.8"/><line x1="19" y1="19" x2="14.2" y2="14.2"/><line x1="5" y1="19" x2="9.8" y2="14.2"/></svg>
+              <span>React Force Graph</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5"><circle cx="12" cy="12" r="10" fill="#6db33f"/><path d="M12 6c-2.5 2.5-3.5 5.5-1.5 8s5.5 1.5 6.5-1c1-2.5-2.5-4.5-5-7zM9.5 14.5c-.5-.5-.5-1.2 0-1.7s1.2-.5 1.7 0" fill="#ffffff" opacity="0.95"/></svg>
+              <span>Spring Boot</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5"><circle cx="12" cy="12" r="10" fill="#10b981"/><path d="M12 6c-2 2-3 4-1.5 6s4.5 1 5.5-.8c.8-1.8-2-3.2-4-5.2z" fill="#ffffff"/><circle cx="12" cy="12" r="1" fill="#10b981"/><path d="M8 12h8M12 8v8" stroke="#ffffff" strokeWidth="1.5" strokeDasharray="1 1"/></svg>
+              <span>Spring AI</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5"><rect x="2" y="2" width="20" height="20" rx="4" fill="#8b5cf6"/><path d="M8 8a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm6 8a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" fill="#ffffff"/><path d="M12 9l2 5M10 11l4 2" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              <span>Cognee Cloud</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#3ecf8e]"><path d="M14 2L5 12.5h6.5v9.5l9-10.5h-6.5z"/></svg>
+              <span>Supabase</span>
+            </span>
+            <span className="text-xs font-bold tracking-wider text-slate-500 uppercase flex items-center gap-2 select-none shrink-0 whitespace-nowrap">
+              <svg viewBox="0 0 24 24" className="w-5 h-5"><circle cx="12" cy="12" r="10" fill="#f55036"/><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5c1.66 0 3.13-.81 4.05-2.05l-1.42-1.42C14.05 14.18 13.1 14.5 12 14.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5c1.1 0 2.05.72 2.38 1.72h-2.38V12.5h3.9c-.1-2.5-2.1-4.5-4.9-4.5z" fill="#ffffff"/></svg>
+              <span>Groq</span>
+            </span>
           </div>
         </div>
       </div>
@@ -596,8 +658,8 @@ const LandingPage = () => {
       {/* Universal Footer */}
       <footer className="bg-slate-100 border-t border-slate-200 py-12 px-6 select-none">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left space-y-2">
-            <span className="text-lg font-black text-slate-800 tracking-tight">DevBrain</span>
+          <div className="text-center md:text-left space-y-2 flex flex-col items-center md:items-start">
+            <img src="/logo_normal.svg?v=3" alt="DevBrain Logo" className="h-12 w-auto object-contain mb-1" />
             <p className="text-xs text-slate-400">© 2026 DevBrain AI. All rights reserved.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 text-xs text-slate-400 font-semibold">

@@ -82,7 +82,7 @@ const GraphPanel = ({ datasetName, highlightedNodes, isMaximized, onToggleMaximi
   }
 
   return (
-    <div className="relative h-full w-full rounded-xl overflow-hidden border border-slate-200 bg-white shadow-sm flex flex-col group">
+    <div className="relative h-full w-full rounded-xl overflow-hidden border border-slate-200 bg-white shadow-sm flex flex-col group font-sans-original">
       
       {/* Header Overlay Controls with absolute positioning */}
       <div className="absolute inset-x-4 top-4 z-10 pointer-events-none">

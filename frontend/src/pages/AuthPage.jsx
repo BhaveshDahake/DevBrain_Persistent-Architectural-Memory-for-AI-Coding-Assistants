@@ -104,8 +104,8 @@ const AuthPage = () => {
         
         {/* Branding */}
         <div className="flex flex-col items-center mb-8 cursor-pointer" onClick={() => navigate('/')}>
-          <h1 className="text-2xl font-black text-indigo-600 tracking-tight">DevBrain</h1>
-          <p className="text-slate-400 text-xs mt-1 font-semibold tracking-wider uppercase">The Intelligent Architect</p>
+          <img src="/logo_stacked.png?v=2" alt="DevBrain Logo" className="h-24 w-auto object-contain" />
+          <p className="text-slate-400 text-[10px] mt-2 font-bold tracking-widest uppercase">The Intelligent Architect</p>
         </div>
 
         {/* Card */}

@@ -64,9 +64,13 @@ const DashboardPage = () => {
     <div className="min-h-screen bg-slate-100 p-8 select-none relative">
       {/* Logout button header integration */}
       <div className="max-w-[95%] mx-auto mb-4 flex justify-between items-center bg-white border border-slate-200 shadow-sm p-4 rounded-2xl">
-        <div className="flex flex-col">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Logged In User</span>
-          <span className="text-sm font-semibold text-slate-800">{user?.email}</span>
+        <div className="flex items-center gap-4">
+          <img src="/logo_normal.svg?v=3" alt="DevBrain Logo" className="h-14 w-auto object-contain cursor-pointer" onClick={() => navigate('/')} />
+          <div className="h-14 w-px bg-slate-200 hidden sm:block"></div>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Logged In User</span>
+            <span className="text-xs font-semibold text-slate-600 leading-none">{user?.email}</span>
+          </div>
         </div>
         <button 
           onClick={signOut} 
