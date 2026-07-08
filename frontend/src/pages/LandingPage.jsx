@@ -116,7 +116,7 @@ const LandingPage = () => {
             <a className="text-slate-500 hover:text-indigo-600 transition-colors text-sm font-semibold" href="#features">Features</a>
             <a className="text-slate-500 hover:text-indigo-600 transition-colors text-sm font-semibold" href="#how-it-works">How it Works</a>
             <a className="text-slate-500 hover:text-indigo-600 transition-colors text-sm font-semibold" href="#faq">FAQ</a>
-            <a className="text-slate-500 hover:text-indigo-600 transition-colors text-sm font-semibold" target="_blank" rel="noreferrer" href="https://github.com">GitHub</a>
+            <a className="text-slate-500 hover:text-indigo-600 transition-colors text-sm font-semibold" target="_blank" rel="noreferrer" href="https://github.com/BhaveshDahake/DevBrain_Persistent-Architectural-Memory-for-AI-Coding-Assistants">GitHub</a>
           </div>
           <div className="flex items-center gap-4">
             <button 
@@ -179,7 +179,7 @@ const LandingPage = () => {
                 Get Started Free
               </button>
               <button 
-                onClick={() => window.open('https://github.com', '_blank')}
+                onClick={() => window.open('https://github.com/BhaveshDahake/DevBrain_Persistent-Architectural-Memory-for-AI-Coding-Assistants', '_blank')}
                 className="border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:scale-[1.02] px-8 py-4 rounded-xl text-md font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
                 View on GitHub
@@ -604,7 +604,7 @@ const LandingPage = () => {
             <a className="hover:text-indigo-600 transition-colors" href="#features">Features</a>
             <a className="hover:text-indigo-600 transition-colors" href="#how-it-works">How it Works</a>
             <a className="hover:text-indigo-600 transition-colors" href="#faq">FAQ</a>
-            <a className="hover:text-indigo-600 transition-colors" target="_blank" rel="noreferrer" href="https://github.com">GitHub</a>
+            <a className="hover:text-indigo-600 transition-colors" target="_blank" rel="noreferrer" href="https://github.com/BhaveshDahake/DevBrain_Persistent-Architectural-Memory-for-AI-Coding-Assistants">GitHub</a>
           </div>
         </div>
       </footer>
