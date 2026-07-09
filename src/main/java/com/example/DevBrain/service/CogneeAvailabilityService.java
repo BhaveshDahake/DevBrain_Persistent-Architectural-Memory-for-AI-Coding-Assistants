@@ -145,6 +145,9 @@ public class CogneeAvailabilityService {
     private boolean isTransientFailure(Throwable throwable) {
         Throwable current = throwable;
         while (current != null) {
+            if (current instanceof com.fasterxml.jackson.databind.exc.MismatchedInputException) {
+                return false;
+            }
             if (current instanceof WebClientResponseException webClientResponseException) {
                 int status = webClientResponseException.getStatusCode().value();
                 if (status == 429 || status >= 500) {

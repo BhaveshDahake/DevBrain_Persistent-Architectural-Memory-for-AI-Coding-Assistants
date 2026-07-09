@@ -475,13 +475,14 @@ public class CogneeClientService {
                     .uri(properties.getApi().getSearchEndpoint())
                     .headers(headers -> headers.addAll(requestHeaders));
 
-            JsonNode rawResponse = requestSpec
+            String responseString = requestSpec
                     .bodyValue(request)
                     .retrieve()
                     .onStatus(HttpStatusCode::isError, response -> response.createException().flatMap(Mono::error))
-                    .bodyToMono(JsonNode.class)
+                    .bodyToMono(String.class)
                     .retryWhen(createRetrySpec())
                     .block();
+            JsonNode rawResponse = StringUtils.hasText(responseString) ? mapper.readTree(responseString) : null;
 
             SearchResult result = parseResponse(rawResponse);
             result.setSource("COGNEE");
@@ -626,34 +627,37 @@ public class CogneeClientService {
             throw new DatasetNotFoundException("Dataset name cannot be blank");
         }
 
-        GraphFetchRequest request = GraphFetchRequest.builder()
-                .datasets(List.of(datasetName))
-                .build();
+        String datasetId = resolveDatasetId(datasetName);
+        if (!StringUtils.hasText(datasetId)) {
+            log.warn("Failed to resolve dataset ID: Dataset not found in Cognee Cloud for '{}'", datasetName);
+            throw new DatasetNotFoundException("Dataset not found in Cognee Cloud");
+        }
 
         long startTime = System.currentTimeMillis();
         HttpHeaders requestHeaders = buildHeaders(MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
-        String requestUrl = buildFullUrl(properties.getApi().getGraphEndpoint());
+        String relativeUri = properties.getApi().getGraphEndpoint() + "/" + datasetId + "/graph";
+        String requestUrl = buildFullUrl(relativeUri);
         try {
-            WebClient.RequestBodySpec requestSpec = webClient.post()
-                    .uri(properties.getApi().getGraphEndpoint())
+            WebClient.RequestHeadersSpec<?> requestSpec = webClient.get()
+                    .uri(relativeUri)
                     .headers(headers -> headers.addAll(requestHeaders));
 
             GraphQueryResult graphResponse = requestSpec
-                    .bodyValue(request)
                     .retrieve()
                     .onStatus(HttpStatusCode::isError, errorResponse -> errorResponse.createException().flatMap(Mono::error))
                     .bodyToMono(GraphQueryResult.class)
                     .retryWhen(createRetrySpec())
                     .block();
 
+            availabilityService.recordSuccess();
             long latency = System.currentTimeMillis() - startTime;
-            logApiInteraction(properties.getApi().getGraphEndpoint(), "POST", request, graphResponse, latency, 200);
+            logApiInteraction(relativeUri, "GET", "datasetName=" + datasetName, graphResponse, latency, 200);
             return graphResponse;
         } catch (Exception e) {
             long latency = System.currentTimeMillis() - startTime;
-            logApiInteraction(properties.getApi().getGraphEndpoint(), "POST", request, e.getMessage(), latency, 500);
-            logCogneeFailure(requestUrl, "POST", requestHeaders, e, extractStatusCode(e), extractResponseBody(e));
-            throw mapAndThrowStructuredException(properties.getApi().getGraphEndpoint(), "POST", e);
+            logApiInteraction(relativeUri, "GET", "datasetName=" + datasetName, e.getMessage(), latency, 500);
+            logCogneeFailure(requestUrl, "GET", requestHeaders, e, extractStatusCode(e), extractResponseBody(e));
+            throw mapAndThrowStructuredException(relativeUri, "GET", e);
         }
     }
 
@@ -665,15 +669,18 @@ public class CogneeClientService {
                     .uri(properties.getApi().getForgetEndpoint() + "/")
                     .headers(headers -> headers.addAll(requestHeaders));
 
-            JsonNode datasetsResponse = requestSpec.retrieve()
+            String responseString = requestSpec.retrieve()
                     .onStatus(HttpStatusCode::isError, response -> response.createException().flatMap(Mono::error))
-                    .bodyToMono(JsonNode.class)
+                    .bodyToMono(String.class)
                     .block();
+            JsonNode datasetsResponse = StringUtils.hasText(responseString) ? mapper.readTree(responseString) : null;
 
             if (datasetsResponse != null && datasetsResponse.isArray()) {
+                log.debug("Full raw datasetsResponse: {}", datasetsResponse);
                 for (JsonNode node : datasetsResponse) {
-                    if (datasetName.equalsIgnoreCase(node.path("name").asText())) {
-                        return node.path("id").asText();
+                    String name = node.has("dataset_name") ? node.path("dataset_name").asText() : node.path("name").asText();
+                    if (datasetName.equalsIgnoreCase(name)) {
+                        return node.has("dataset_id") ? node.path("dataset_id").asText() : node.path("id").asText();
                     }
                 }
             }
@@ -695,12 +702,13 @@ public class CogneeClientService {
         try {
             while (attempts < STATUS_POLL_MAX_ATTEMPTS) {
                 attempts++;
-                JsonNode statusResponse = webClient.get()
+                String statusResponseString = webClient.get()
                         .uri(DATASET_STATUS_ENDPOINT + "?dataset=" + datasetId + "&pipeline=" + COGNIFY_PIPELINE)
                         .retrieve()
                         .onStatus(HttpStatusCode::isError, r -> r.createException().flatMap(Mono::error))
-                        .bodyToMono(JsonNode.class)
+                        .bodyToMono(String.class)
                         .block();
+                JsonNode statusResponse = StringUtils.hasText(statusResponseString) ? mapper.readTree(statusResponseString) : null;
 
                 if (statusResponse != null) {
                     String status = null;
@@ -746,12 +754,13 @@ public class CogneeClientService {
     private String getDatasetStatusById(String datasetId) {
         if (!StringUtils.hasText(datasetId)) return null;
         try {
-            JsonNode statusResponse = webClient.get()
+            String statusResponseString = webClient.get()
                     .uri(DATASET_STATUS_ENDPOINT + "?dataset=" + datasetId + "&pipeline=" + COGNIFY_PIPELINE)
                     .retrieve()
                     .onStatus(HttpStatusCode::isError, r -> r.createException().flatMap(Mono::error))
-                    .bodyToMono(JsonNode.class)
+                    .bodyToMono(String.class)
                     .block();
+            JsonNode statusResponse = StringUtils.hasText(statusResponseString) ? mapper.readTree(statusResponseString) : null;
 
             if (statusResponse != null) {
                 if (statusResponse.has(datasetId)) {
